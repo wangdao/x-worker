@@ -1,0 +1,15 @@
+#set($index = 0)
+#set($end = $fields.size() - 1)
+
+
+UPDATE ${tableName} SET
+#foreach ($field in $fields)
+    #if($index < $end)
+        ${field.column} = #{vo.${field.name}},
+        #set($index = $index + 1)
+    #else
+        #set($index = 0)
+        ${field.column} = #{vo.${field.name}}
+    #end
+#end
+WHERE id = #{id}

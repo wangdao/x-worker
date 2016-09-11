@@ -1,0 +1,13 @@
+SELECT
+#foreach ($field in $fields)
+    #if($index < $end)
+        ${field.column},
+        #set($index = $index + 1)
+    #else
+        ${field.column}
+        #set($index = 0)
+    #end
+
+#end
+
+FROM ${tableName}

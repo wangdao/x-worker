@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="${namespace}">
+
+    <resultMap id="${className}" type="${javaType}">
+        <id property="${idProperty}" column="${idColumn}"/>
+
+        #foreach( $field in $fields)
+            <result property="${field.name}" column="${field.column}"/>
+        #end
+    </resultMap>
+
+    #set($index = 0)
+    #set($end = $fields.size() - 1)
+
+    <insert id="insert">
+        INSERT INTO ${tableName} (
+        #foreach ($field in $fields)
+            #if($index < $end)
+                ${field.column},
+                #set($index = $index + 1)
+            #else
+                ${field.column}
+                #set($index = 0)
+            #end
+
+        #end
+        ) VALUES (
+        #foreach ($field in $fields)
+            #if($index < $end)
+                #{vo.${field.name}},
+                #set($index = $index + 1)
+            #else
+                #set($index = 0)
+                #{vo.${field.name}}
+            #end
+        #end
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE ${tableName} SET
+        #foreach ($field in $fields)
+            #if($index < $end)
+                ${field.column} = #{vo.${field.name}},
+                #set($index = $index + 1)
+            #else
+                #set($index = 0)
+                ${field.column} = #{vo.${field.name}}
+            #end
+        #end
+        WHERE id = #{id}
+    </update>
+
+
+</mapper>
