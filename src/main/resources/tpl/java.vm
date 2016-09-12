@@ -1,4 +1,4 @@
-package ${javaClass.packageName}
+package ${javaClass.packageName};
 
 
 #foreach($import in ${imports})
@@ -10,7 +10,7 @@ import $import;
 /**
  * ${javaClass.comment}
  */
-publict class ${javaClass.name}Vo {
+public class ${javaClass.name}Vo {
 
 #foreach ($field in ${javaClass.fields})
 
@@ -27,7 +27,7 @@ publict class ${javaClass.name}Vo {
     }
 
     public void set${StringUtil.capitalizeFirstLetter($field.name)}($field.javaType $field.name) {
-        this.$field.name = $field.name
+        this.$field.name = $field.name;
     }
 
 #end
